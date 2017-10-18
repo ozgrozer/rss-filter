@@ -1,10 +1,6 @@
 <?php
 
 class RssFilter {
-  function __construct() {
-    include 'words.php';
-  }
-
   function stristrArray($haystack, $needle) {
     if (!is_array($needle)) {
       $needle = [$needle];
@@ -38,6 +34,8 @@ class RssFilter {
   }
 
   function init($source) {
+    include 'words.php';
+
     $xmlDoc = new DOMDocument();
     $source = trim(file_get_contents($source));
     $xmlDoc->loadXML($source);
@@ -67,7 +65,7 @@ class RssFilter {
         $updated = $this->getAttribute($item->getElementsByTagName('updated'));
         $published = $pubDate ? $pubDate : $updated;
 
-        if (!$this->stristrArray($title, $words)) {
+        if (!$this->stristrArray($title, $words) && !($this->stristrArray($description, $words))) {
           $combineItems .= '<item>
             <title>' . $title . '</title>
             <link>' . $link . '</link>
@@ -93,7 +91,7 @@ class RssFilter {
         $description = $description ? $description : $this->getAttribute($item->getElementsByTagName('encoded'));
         $pubDate = $this->getAttribute($item->getElementsByTagName('pubDate'));
 
-        if (!$this->stristrArray($title, $words)) {
+        if (!$this->stristrArray($title, $words) && !($this->stristrArray($description, $words))) {
           $combineItems .= '<item>
             <title>' . $title . '</title>
             <link>' . $link . '</link>
