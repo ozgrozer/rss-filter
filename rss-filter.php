@@ -87,8 +87,9 @@ class RssFilter {
         $item = $items->item($i);
         $title = htmlspecialchars($this->getAttribute($item->getElementsByTagName('title')));
         $link = htmlspecialchars($this->getAttribute($item->getElementsByTagName('link')));
-        $description = htmlspecialchars($this->getAttribute($item->getElementsByTagName('description')));
-        $description = $description ? $description : $this->getAttribute($item->getElementsByTagName('encoded'));
+        $description1 = htmlspecialchars($this->getAttribute($item->getElementsByTagName('description')));
+        $description2 = htmlspecialchars($this->getAttribute($item->getElementsByTagName('encoded')));
+        $description = $description1 ? $description1 : $description2;
         $pubDate = $this->getAttribute($item->getElementsByTagName('pubDate'));
 
         if (!$this->stristrArray($title, $words) && !($this->stristrArray($description, $words))) {
