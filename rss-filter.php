@@ -92,12 +92,19 @@ class RssFilter {
         $description = $description1 ? $description1 : $description2;
         $pubDate = $this->getAttribute($item->getElementsByTagName('pubDate'));
 
+        $enclosure = ['url' => '', 'type' => '', 'length' => ''];
+        $imageAttributes = $item->getElementsByTagName('enclosure')[0]->attributes;
+        foreach ($imageAttributes as $key => $imageAttribute) {
+          $enclosure[$imageAttribute->nodeName] = $imageAttribute->nodeValue;
+        }
+
         if (!$this->stristrArray($title, $words) && !($this->stristrArray($description, $words))) {
           $combineItems .= '<item>
             <title>' . $title . '</title>
             <link>' . $link . '</link>
             <description>' . $description . '</description>
             <pubDate>' . $pubDate . '</pubDate>
+            <enclosure url="' . $enclosure['url'] . '" type="' . $enclosure['type'] . '" length="' . $enclosure['length'] . '" />
           </item>';
         }
       }
