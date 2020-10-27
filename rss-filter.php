@@ -95,7 +95,7 @@ class RssFilter {
         $enclosure = ['url' => '', 'type' => '', 'length' => ''];
         $imageAttributes = $item->getElementsByTagName('enclosure')[0]->attributes;
         foreach ($imageAttributes as $key => $imageAttribute) {
-          $enclosure[$imageAttribute->nodeName] = $imageAttribute->nodeValue;
+          $enclosure[$imageAttribute->nodeName] = htmlspecialchars($imageAttribute->nodeValue);
         }
 
         if (!$this->stristrArray($title, $words) && !($this->stristrArray($description, $words))) {
