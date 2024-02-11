@@ -65,7 +65,10 @@ class RssFilter {
         $updated = $this->getAttribute($item->getElementsByTagName('updated'));
         $published = $pubDate ? $pubDate : $updated;
 
-        if (!$this->stristrArray($title, $words) && !($this->stristrArray($description, $words))) {
+        if (
+          ($this->stristrArray($title, $goodwords) || ($this->stristrArray($description, $badwords))) && 
+          (!$this->stristrArray($title, $badwords) && !($this->stristrArray($description, $badwords)))
+          ) {
           $combineItems .= '<item>
             <title>' . $title . '</title>
             <link>' . $link . '</link>
