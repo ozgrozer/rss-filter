@@ -66,7 +66,7 @@ class RssFilter {
         $published = $pubDate ? $pubDate : $updated;
 
         if (
-          ($this->stristrArray($title, $goodwords) || ($this->stristrArray($description, $badwords))) && 
+          ($this->stristrArray($title, $goodwords) || ($this->stristrArray($description, $goodwords))) && 
           (!$this->stristrArray($title, $badwords) && !($this->stristrArray($description, $badwords)))
           ) {
           $combineItems .= '<item>
@@ -103,7 +103,7 @@ class RssFilter {
 
 
         if (
-          ($this->stristrArray($title, $goodwords) || ($this->stristrArray($description, $badwords))) && 
+          ($this->stristrArray($title, $goodwords) || ($this->stristrArray($description, $goodwords))) && 
           (!$this->stristrArray($title, $badwords) && !($this->stristrArray($description, $badwords)))
           ) {
           $combineItems .= '<item>
