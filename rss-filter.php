@@ -93,7 +93,7 @@ class RssFilter {
         $description1 = htmlspecialchars($this->getAttribute($item->getElementsByTagName('description')));
         $description2 = htmlspecialchars($this->getAttribute($item->getElementsByTagName('encoded')));
         $description = $description2 ? $description1 : $description2;
-        $searchhaystack= $description1 + $description2 
+        $searchhaystack= $description1 + $description2 ;
         $pubDate = $this->getAttribute($item->getElementsByTagName('pubDate'));
 
         $enclosure = ['url' => '', 'type' => '', 'length' => ''];
