@@ -65,7 +65,10 @@ class RssFilter {
         $updated = $this->getAttribute($item->getElementsByTagName('updated'));
         $published = $pubDate ? $pubDate : $updated;
 
-        if (!$this->stristrArray($title, $words) && !($this->stristrArray($description, $words))) {
+        if (
+          ($this->stristrArray($title, $goodwords) || ($this->stristrArray($description, $goodwords))) && 
+          (!$this->stristrArray($title, $badwords) && !($this->stristrArray($description, $badwords)))
+          ) {
           $combineItems .= '<item>
             <title>' . $title . '</title>
             <link>' . $link . '</link>
@@ -90,6 +93,7 @@ class RssFilter {
         $description1 = htmlspecialchars($this->getAttribute($item->getElementsByTagName('description')));
         $description2 = htmlspecialchars($this->getAttribute($item->getElementsByTagName('encoded')));
         $description = $description1 ? $description1 : $description2;
+        $searchhaystack=$description2." ".$description1;
         $pubDate = $this->getAttribute($item->getElementsByTagName('pubDate'));
 
         $enclosure = ['url' => '', 'type' => '', 'length' => ''];
@@ -98,7 +102,11 @@ class RssFilter {
           $enclosure[$imageAttribute->nodeName] = htmlspecialchars($imageAttribute->nodeValue);
         }
 
-        if (!$this->stristrArray($title, $words) && !($this->stristrArray($description, $words))) {
+
+        if (
+          ($this->stristrArray($title, $goodwords) || ($this->stristrArray($searchhaystack, $goodwords))) && 
+          (!$this->stristrArray($title, $badwords) && !($this->stristrArray($searchhaystack, $badwords)))
+          ) {
           $combineItems .= '<item>
             <title>' . $title . '</title>
             <link>' . $link . '</link>
